@@ -13,15 +13,12 @@ app.use((req, res, next) => { // set current year and log requests to console
 	let log = `${now}: ${req.method} ${req.url} `
 	console.log(log)
 	fs.appendFile('server.log', log + '\n', (err) => {
-		console.log('unable to append to server log.  so sorry');
+		// console.log('unable to append to server log.  so sorry');
 	});
 
 	next();
 })
 
-app.use((req, res, next) => { // forward all requests to the maintenance page.
-	res.render('maintenance.hbs')
-})
 
 app.use(express.static(__dirname + '/public'));  // points to static pages or files in public folder
 
@@ -54,8 +51,10 @@ app.get('/bad', (req, res) => {
 	})
 })
 
-app.get('/name/:name', (req, res) => {
-	res.send(req.params.name)
+app.get('/projects', (req, res) => {
+	res.render('projects', {
+		pageTitle: 'Projects'
+	})
 })
 
 app.listen(port, () => {
@@ -88,26 +87,3 @@ app.listen(port, () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const express = require('express');
-
-// const app = express();
-
-// app.get('/', (req, res) => {
-// 	res.send('hello express');
-// });
-
-// app.listen(3000);
